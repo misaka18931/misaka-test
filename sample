@@ -1,0 +1,25 @@
+#!/bin/sh
+NDEBUG=false
+BOLD='\033[1m'
+C208='\033[38;5;208m'
+RESET='\033[0m'
+
+debug () {
+  echo -e "\033[1m\033[38;5;255mdebug:\033[0m $@"
+}
+
+warn () {
+  echo -e "\033[1m\033[38;5;208mwarning:\033[0m $@"
+}
+
+
+err () {
+  echo -e "\033[1m\033[38;5;196merror:\033[0m $@"
+}
+
+main() {
+  
+  exit 0;
+}
+
+main "$@"

@@ -1,0 +1,24 @@
+#!/bin/sh
+PREFIX=/tmp/misaka-test-`uuidgen`
+mkdir $PREFIX
+[ "$#" -lt 2 ] && exit 1
+name=$1
+total=$2
+shift 2
+TL=${1:-1}
+g++ -O2 $name.cpp -o $PREFIX/$name
+CUR=`pwd`
+cd $PREFIX
+pass=$total
+for ((i=1;i<=$total;++i)) {
+  printf "\033[01mrunning\033[0m: #$i\r"
+  cp $CUR/../data/$name/$name$i.in $PREFIX/$name.in
+  timeout $TL $PREFIX/$name
+  diff -q --ignore-all-space $CUR/../data/$name/$name$i.out $PREFIX/$name.out > /dev/null
+  stat=$?
+  [ $stat -ne 0 ] && pass=$(($pass-1)) && printf "\33[2K#$i \033[31mFAIL\033[0m\n"
+}
+printf "\33[2K"
+[ "$pass" -eq "$total" ] && echo -e "\033[1;32mAccepted\033[0m" || echo -e "\033[1;33mpartial: $pass/$total passed.\033[0m"
+rm -rf $PREFIX
+

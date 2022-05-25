@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/chtholly/misaka-test'
+make: Leaving directory '/home/chtholly/misaka-test'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
