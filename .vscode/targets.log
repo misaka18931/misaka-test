@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Mon May 16 21:27:06 2022
+# Make data base, printed on Sat May 28 18:32:15 2022
 
 # Variables
 
@@ -19,9 +19,9 @@ LC_ALL = C
 # environment
 NO_AT_BRIDGE = 1
 # environment
-I3SOCK = /run/user/1000/i3/ipc-socket.8390
+GJS_DEBUG_OUTPUT = stderr
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-dbbbbec5-1b12-4921-9955-7a76e7b3a48b.sock
+VSCODE_IPC_HOOK_EXTHOST = /run/user/1000/vscode-ipc-c130d5c4-8cab-4c20-9a24-af18a1265ba9.sock
 # environment
 VSCODE_CWD = /home/chtholly
 # environment
@@ -51,7 +51,7 @@ VSCODE_LOG_STACK = false
 # automatic
 %F = $(notdir $%)
 # environment
-VSCODE_CODE_CACHE_PATH = /home/chtholly/.config/Code/CachedData/57fd6d0195bb9b9d1b49f6da5db789060795de47
+VSCODE_CODE_CACHE_PATH = /home/chtholly/.config/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LANG = C
 # environment
@@ -72,12 +72,14 @@ APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 *D = $(patsubst %/,%,$(dir $*))
 # environment
 MFLAGS = -pqrR
+# environment
+SSH_AUTH_SOCK = /run/user/1000/keyring/ssh
 # default
 .SHELLFLAGS := -c
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-XDG_SESSION_DESKTOP = i3
+XDG_SESSION_DESKTOP = gnome
 # makefile
 MAKEFILE_LIST := 
 # automatic
@@ -85,13 +87,15 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_PID = 391913
+VSCODE_PID = 16838
 # environment
 XDG_SESSION_TYPE = x11
 # environment
 CUDA_PATH = /opt/cuda
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
+# environment
+SESSION_MANAGER = local/hokago-teatime:@/tmp/.ICE-unix/3896,unix/hokago-teatime:/tmp/.ICE-unix/3896
 # automatic
 *F = $(notdir $*)
 # environment
@@ -109,7 +113,11 @@ SHELL = /bin/sh
 # default
 MAKECMDGOALS := all
 # environment
-SHLVL = 2
+XMODIFIERS = @im=ibus
+# environment
+GJS_DEBUG_TOPICS = JS ERROR;JS LOG
+# environment
+SHLVL = 1
 # environment
 MAKELEVEL := 0
 # default
@@ -123,44 +131,50 @@ MOTD_SHOWN = pam
 # automatic
 ^F = $(notdir $^)
 # environment
+INVOCATION_ID = 5655e475f7aa4f03859457ffef7fd1ba
+# environment
 VSCODE_LOG_NATIVE = false
 # environment
 USERNAME = chtholly
 # automatic
 ?F = $(notdir $?)
 # environment
-XDG_SEAT = seat0
-# environment
- 
-XDG_CURRENT_DESKTOP = i3
+XDG_CURRENT_DESKTOP = GNOME
 # automatic
 +F = $(notdir $+)
 # environment
-DESKTOP_SESSION = i3
+DESKTOP_SESSION = gnome
 # environment
-ORIGINAL_XDG_CURRENT_DESKTOP = i3
+ORIGINAL_XDG_CURRENT_DESKTOP = GNOME
 # 'override' directive
 GNUMAKEFLAGS := 
 # environment
 LOGNAME = chtholly
 # environment
-XDG_VTNR = 2
+GIO_LAUNCHED_DESKTOP_FILE = /usr/share/applications/visual-studio-code.desktop
 # makefile
 .DEFAULT_GOAL := 
 # environment
-SYSTEMD_EXEC_PID = 8240
+SYSTEMD_EXEC_PID = 3914
 # environment
 DISPLAY = :1
-# environment
-GTK_MODULES = canberra-gtk-module
 # environment
 USER = chtholly
 # default
 MAKE_VERSION := 4.3
 # environment
+MANAGERPID = 3531
+# environment
+DEBUGINFOD_URLS = https://debuginfod.archlinux.org 
+# environment
+GIO_LAUNCHED_DESKTOP_FILE_PID = 16787
+# environment
 _ = /usr/bin/make
 # environment
+ 
 XDG_RUNTIME_DIR = /run/user/1000
+# environment
+JOURNAL_STREAM = 8:28059
 # environment
 XDG_SESSION_CLASS = user
 # environment
@@ -168,11 +182,11 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 HOME = /home/chtholly
 # environment
+QT_IM_MODULE = ibus
+# environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK = /run/user/1000/vscode-123e869c-1.67.0-main.sock
-# environment
-XDG_SESSION_ID = 3
+VSCODE_IPC_HOOK = /run/user/1000/vscode-123e869c-1.67.2-main.sock
 # default
 .RECIPEPREFIX := 
 # automatic
@@ -186,9 +200,11 @@ ELECTRON_NO_ATTACH_CONSOLE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell nocomment grouped-target extra-prereqs archives jobserver output-sync check-symlink guile load
 # environment
-GDMSESSION = i3
+XDG_MENU_PREFIX = gnome-
+# environment
+GDMSESSION = gnome
 # variable set hash-table stats:
-# Load=87/1024=8%, Rehash=0, Collisions=5/114=4%
+# Load=95/1024=9%, Rehash=0, Collisions=4/122=3%
 
 # Pattern-specific Variable Values
 
@@ -196,9 +212,9 @@ GDMSESSION = i3
 
 # Directories
 
-# . (device 38, inode 1423352): 8 files, no impossibilities.
+# . (device 38, inode 1423352): 13 files, no impossibilities.
 
-# 8 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -246,15 +262,14 @@ GNUmakefile:
 
 # No 'vpath' search paths.
 
- 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 16 / storage = 138 B / avg = 8 B
-# current buf: size = 8162 B / used = 138 B / count = 16 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 21 / storage = 171 B / avg = 8 B
+# current buf: size = 8162 B / used = 171 B / count = 21 / avg = 8 B
 
-# strcache performance: lookups = 19 / hit rate = 15%
+# strcache performance: lookups = 24 / hit rate = 12%
 # hash-table stats:
-# Load=16/8192=0%, Rehash=0, Collisions=0/19=0%
-# Finished Make data base on Mon May 16 21:27:06 2022
+# Load=21/8192=0%, Rehash=0, Collisions=0/24=0%
+# Finished Make data base on Sat May 28 18:32:15 2022
 
  

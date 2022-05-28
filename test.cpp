@@ -42,15 +42,10 @@ template <typename T> inline void ckmax(T &a, const T &b) { a = max(a, b); }
 const int N = 0;
 
 inline void sol() {
-  int x;
-  vector<int> g(10000000);
-  FOR(i,1,1000000) {
-    ++x;
-  }
+  vector<int> v(1<<20);
 }
 
 int main() {
-  fprintf(stderr, "test called\n");
 #ifndef MISAKA
 #ifdef IOFILE
   freopen(IOFILE ".in", "r", stdin);
@@ -65,7 +60,6 @@ int main() {
   while (T--)
 #endif
     sol();
-  fprintf(stderr, "test normal\n");
   return 0;
 }
 
