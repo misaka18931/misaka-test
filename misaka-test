@@ -1,24 +1,38 @@
-#!/bin/sh
+#!/bin/sh -e
+trap 'rm -rf ${PREFIX:-/tmp/misaka-test} && exit 2' 2
+if=${if:-'../data/$name/$name$i.in'}
+of=${of:-'../data/$name/$name$i.out'}
 PREFIX=/tmp/misaka-test-`uuidgen`
 mkdir $PREFIX
-[ "$#" -lt 2 ] && exit 1
+[ "$#" -lt 1 ] && exit 1
 name=$1
-total=$2
-shift 2
-TL=${1:-1}
+TL=${2:-1}
 g++ -O2 $name.cpp -o $PREFIX/$name
 CUR=`pwd`
 cd $PREFIX
-pass=$total
-for ((i=1;i<=$total;++i)) {
+pass=0
+total=0
+set +e
+for ((i=1;;++i)) {
+  eval [ ! -f $CUR/$if ] && break
+  total=$(($total+1))
   printf "\033[01mrunning\033[0m: #$i\r"
-  cp $CUR/../data/$name/$i.in $PREFIX/$name.in
+  eval cp $CUR/$if $PREFIX/$name.in
   timeout $TL $PREFIX/$name
-  diff -q --ignore-all-space $CUR/../data/$name/$i.out $PREFIX/$name.out > /dev/null
-  stat=$?
-  [ $stat -ne 0 ] && pass=$(($pass-1)) && printf "\33[2K#$i \033[31mFAIL\033[0m\n"
+  if [ $? -eq 124 ] ;then
+    printf "\33[2K#$i \033[33mtimeout\033[0m\n"
+    continue;
+  fi
+  eval diff -q --ignore-all-space $CUR/$of $PREFIX/$name.out > /dev/null
+  ret=$?
+  if [ $ret -ne 0 ] ;then
+    printf "\33[2K#$i \033[31mwrong answer\033[0m\n"
+  else
+    pass=$(($pass+1))
+  fi
 }
+set -e
 printf "\33[2K"
-[ "$pass" -eq "$total" ] && echo -e "\033[1;32mAccepted\033[0m" || echo -e "\033[1;33mpartial: $pass/$total passed.\033[0m"
+[ "$pass" -eq "$total" ] && echo -e "\033[1;32mAccepted ($total)\033[0m" || echo -e "\033[1;33mpartial: $pass/$total passed.\033[0m"
 rm -rf $PREFIX
 
