@@ -1,38 +1,73 @@
 #!/bin/sh -e
+score_0='\033[38;2;255;69;69m'
+score_1='\033[38;2;255;105;79m'
+score_2='\033[38;2;248;96;58m'
+score_3='\033[38;2;252;131;84m'
+score_4='\033[38;2;250;146;49m'
+score_5='\033[38;2;247;187;59m'
+score_6='\033[38;2;236;219;68m'
+score_7='\033[38;2;226;236;82m'
+score_8='\033[38;2;176;214;40m'
+score_9='\033[38;2;169;180;42m'
+score_10='\033[38;2;55;218;88m'
+no_col='\033[0m'
+RED=$score_0
+PURPLE='\033[38;2;188;53;255m'
+ORANGE='\033[38;2;255;152;64m'
+printscore () {
+  if [ $2 == 0 ] ;then
+    echo No Data;
+    return
+  fi
+  eval printf '$'score_$((10*$1/$2))
+  [ "$1" -eq "$2" ] && printf "Accepted ($2)" || printf "$1/$2 passed."
+  printf "$no_col\n"
+}
 trap 'rm -rf ${PREFIX:-/tmp/misaka-test} && exit 2' 2
-if=${if:-'../data/$name/$name$i.in'}
-of=${of:-'../data/$name/$name$i.out'}
+data=${data:-'$name$i'}
+if=${if:-'../data/$name/'$data'.in'}
+of=${of:-'../data/$name/'$data'.out'}
 PREFIX=/tmp/misaka-test-`uuidgen`
 mkdir $PREFIX
 [ "$#" -lt 1 ] && exit 1
 name=$1
 TL=${2:-1}
+printf '\033[01mcompiling...\033[0m\r'
 g++ -O2 $name.cpp -o $PREFIX/$name
 CUR=`pwd`
 cd $PREFIX
 pass=0
 total=0
 set +e
+ulimit -s unlimited
 for ((i=1;;++i)) {
   eval [ ! -f $CUR/$if ] && break
   total=$(($total+1))
-  printf "\033[01mrunning\033[0m: #$i\r"
+  printf "\33[2K\033[01mrunning\033[0m: #$i\r"
   eval cp $CUR/$if $PREFIX/$name.in
-  timeout $TL $PREFIX/$name
-  if [ $? -eq 124 ] ;then
-    printf "\33[2K#$i \033[33mtimeout\033[0m\n"
+  {
+exec 2>/dev/null
+  timeout $TL $PREFIX/$name 2> /dev/null
+  ret=$?
+  if [ $ret -eq 124 ] ;then
+    printf "\33[2K#$i ${ORANGE}TLE${no_col}\n"
     continue;
   fi
+  if [ $ret -ne 0 ] ;then
+    printf "\33[2K#$i ${PURPLE}RE${no_col}\n"
+    continue;
+  fi
+  }
   eval diff -q --ignore-all-space $CUR/$of $PREFIX/$name.out > /dev/null
   ret=$?
   if [ $ret -ne 0 ] ;then
-    printf "\33[2K#$i \033[31mwrong answer\033[0m\n"
+    printf "\33[2K#$i ${RED}WA$no_col\n"
   else
     pass=$(($pass+1))
   fi
 }
 set -e
 printf "\33[2K"
-[ "$pass" -eq "$total" ] && echo -e "\033[1;32mAccepted ($total)\033[0m" || echo -e "\033[1;33mpartial: $pass/$total passed.\033[0m"
+printscore $pass $total
 rm -rf $PREFIX
 
